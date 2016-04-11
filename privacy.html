@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <meta charset="utf-8">
+        <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon">
+        <link rel="icon" href="/favicon.ico" type="image/x-icon">
+        <title>SlackNorris</title>
+        <meta name="description" content="">
+        <script type="text/javascript">
+            //auto expand textarea
+            function adjust_textarea(h) {
+                h.style.height = "20px";
+                h.style.height = (h.scrollHeight)+"px";
+            }
+        </script>
+        <style>
+            div.background {
+                position: absolute;
+                width: 100%;
+            }
+            div.blur {
+                background: rgba(0, 0, 0, 0.6);
+                position: absolute;
+                left: 5%;
+                width: 40%;
+                height: 100%;180
+                text-align: center;
+                background-size:cover;
+                -webkit-filter: blur(4px);
+                -moz-filter: blur(4px);
+                -ms-filter: blur(4px);
+                -o-filter: blur(4px);
+                filter: blur(4px);
+            }
+            div.container {
+                position: absolute;
+                top: 5%;
+                left: 5%;
+                width: 40%;
+                text-align: center;
+            }
+            div.title {
+                position: relative;
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-size: 4vw;
+                font-weight: 600;
+                color: #FFFFFF;
+            }
+            div.text {
+                position: relative;
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-weight: 100;
+                font-size: 1.5vw;
+                width: 80%;
+                padding-right: 10%;
+                padding-left: 10%;
+                padding-top: 5%;
+                padding-bottom: 5%;
+                text-align: center;
+                color: #FFFFFF;
+            }
+            div.button {
+                position: relative;
+                padding-bottom: 5%;
+            }
+            div.screenshot {
+                position: relative;
+                padding-bottom: 5%;
+            }
+            div.footer {
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                position: absolute;
+                right: 5%;
+                bottom: 5%;
+                color: #FFFFFF;
+                font-size: 0.9vw;
+                text-align: center;
+            }
+            a:link {
+                color: #FFFFFF;
+            }
+            a:visited {
+                color: #FFFFFF;
+            }
+            a:hover {
+                color: #FFFFFF;
+            }
+            a:active {
+                color: #FFFFFF;
+            }
+
+            div.contact {
+                position: relative;
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                font-weight: 100;
+                font-size: 1.5vw;
+                width: 80%;
+                padding-right: 10%;
+                padding-left: 10%;
+                padding-top: 5%;
+                padding-bottom: 5%;
+                text-align: left;
+                color: #FFFFFF;
+            }
+            div.contact input[type="text"],
+            div.contact input[type="email"],
+            div.contact textarea {
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                box-sizing: border-box;
+                -webkit-box-sizing: border-box;
+                -moz-box-sizing: border-box;
+                outline: none;
+                display: block;
+                width: 100%;
+                padding: 7px;
+                border: none;
+                border-bottom: 1px solid #ddd;
+                background: transparent;
+                margin-bottom: 10px;
+                font: 16px Arial, Helvetica, sans-serif;
+                height: 45px;
+                color: #FFFFFF;
+            }
+            div.contact input {
+                -webkit-transition: "color 9999s ease-out, background-color 9999s ease-out";
+                -webkit-transition-delay: 9999s;
+            }
+
+            div.contact input[type="submit"] {
+                font-family: "Helvetica Neue",Helvetica,Arial,sans-serif;
+                background-color: #FFFFFF;
+                cursor: pointer;
+                color: #000000;
+                font-size: 1.0vw;
+                padding: 8px 18px;
+                border-radius: 3px;
+            }
+            div.contact input[type="button"]:hover,
+            div.contact input[type="submit"]:hover {
+                float: right;
+                background-color: #ededed;
+                border-radius: 3px;
+            }
+            </style>
+        </style>
+    </head>
+    <body bgcolor="#000000">
+        <div class="background">
+            <img src="img/background.jpg" width="100%"/>
+        </div>
+        <div class="blur">
+        </div>
+
+        <div class="container">
+            <div class="title">
+                <span>Privacy</span>
+            </div>
+            <div class="text">
+                <span>
+                    <strong>SlackNorris</strong> is a project for fun, not a business or knowledge base.
+                    <br/>
+                    <br/>
+                    We store absolutely nothing about you or your team.
+                    There's no database, files, cache, or any storage engine behind the website and API whatsoever.
+                    <br/>
+                    <br/>
+                    On top of all that, remember that <strong>Chuck Norris</strong> already knows everything about you so we don't have to store it.
+                </span>
+            </div>
+            <div class="button">
+                <a href="https://slack.com/oauth/authorize?scope=commands&client_id=16115056836.16121439510">
+                    <img alt="Add to Slack" height="40" width="139"
+                         src="https://platform.slack-edge.com/img/add_to_slack.png"
+                         srcset="https://platform.slack-edge.com/img/add_to_slack.png 1x, https://platform.slack-edge.com/img/add_to_slack@2x.png 2x">
+                    </img>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="footer">
+            <span>
+                <a href="contact.html">Contact</a>
+            </span>
+            <span>
+            &nbsp;&nbsp;|&nbsp;&nbsp; With ♥ by
+            </span>
+            <span>
+                <a href="http://twitter.com/robertoestivill?ref=slacknorris" target="_blank">Robert</a>
+                &amp;
+                <a href="http://twitter.com/laplazapedro?ref=slacknorris" target="_blank">Peter</a>
+            </span>
+            <br/>
+
+        </div>
+    </body>
+</html>
