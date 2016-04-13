@@ -8,4 +8,6 @@ To do so, configure your Slack origin token in
 
 in the constant 
 
-`static final String SLACK_ORIGIN_TOKEN = "YOUR SLACK ORIGIN TOKEN";`
+```
+static final String SLACK_ORIGIN_TOKEN = "YOUR SLACK ORIGIN TOKEN";
+```
