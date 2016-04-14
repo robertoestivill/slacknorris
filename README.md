@@ -12,7 +12,7 @@ The original website will be running in [http://robertoestivill.com/slacknorris]
 
 ## Lambdas
 
-Server side logic is implemented using AWS Lambda and API Gateway.
+Server side logic is implemented using [AWS Lambda](https://aws.amazon.com/lambda/) and [API Gateway](https://aws.amazon.com/api-gateway/).
 
 Although all the code is hosted in this project, there is a lot of AWS configuration that is not expressed here and will cause this project not to run out of the box.
 
