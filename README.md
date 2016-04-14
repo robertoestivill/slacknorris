@@ -1,6 +1,9 @@
 **SlackNorris** is a Slack slash command that displays Chuck Norris quotes from [icndb.com](http://icndb.com) into your Slack conversations.
 
 
+[![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://slack.com/oauth/authorize?scope=commands&client_id=16115056836.16121439510)
+
+
 ## Website
 
 All static content is served through Github Pages. 
