@@ -3,7 +3,7 @@
 
 [![Add to Slack](https://platform.slack-edge.com/img/add_to_slack.png)](https://slack.com/oauth/authorize?scope=commands&client_id=16115056836.16121439510)
 
-![Commands](website/img/commands.jpg)
+![Commands](website/images/image01.jpg)
 
 ## Website
 
