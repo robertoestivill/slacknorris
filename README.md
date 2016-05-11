@@ -41,15 +41,13 @@ Receives a call from Slack to execute the slash command. Performs parameters che
 
 ## Notes
 
-The website is also mantain in the `master` branch and deployed to `gh-pages` by running
+The website is also mantain in the `master` branch and deployed to `gh-pages`.
 
-Jekyll needs to be installed The website is build with `Jekyll`
+Jekyll needs to be installed to build the website 
 
-
-```
+```sh
 $ cd website/
 $ jekyll build
-$ git subtree push --prefix _site origin gh-pages
 ```
 
 
