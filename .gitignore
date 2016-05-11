@@ -3,6 +3,5 @@ bin/
 .DS_Store
 *.iml
 .idea/
-_site
 .sass-cache
 .jekyll-metadata
