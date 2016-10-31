@@ -5,6 +5,16 @@
 
 ![Commands](website/images/image01.jpg)
 
+
+## Lambdas
+
+Server side logic is implemented using [Serverless Framework](https://serverless.com), which manages [AWS Lambda](https://aws.amazon.com/lambda/) and [API Gateway](https://aws.amazon.com/api-gateway/) and other AWS resources.
+
+Although all the code is hosted in this project, there is a lot of AWS configuration that is not expressed here and will cause this project not to run out of the box.
+
+There are three lambdas in this project and each gets compiled into a different module.
+
+
 ## Website
 
 All static content is served through Github Pages. 
@@ -12,30 +22,6 @@ All static content is served through Github Pages.
 You can find it in the `website` directory.
 
 The original website will be running in [http://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
-
-
-## Lambdas
-
-Server side logic is implemented using [AWS Lambda](https://aws.amazon.com/lambda/) and [API Gateway](https://aws.amazon.com/api-gateway/).
-
-Although all the code is hosted in this project, there is a lot of AWS configuration that is not expressed here and will cause this project not to run out of the box.
-
-There are three lambdas in this project and each gets compiled into a different module.
-
-
-### lambda-contact
-
-Receives form data from the website, sends an email with the information and redirects to the static website.
-
-
-### lambda-callback
-
-Receives a call from Slack OAuth process, performs a confirmation request to Slack to finish the OAuth signup and redirects to the success/error static website.
-
-
-### lambda-command
-
-Receives a call from Slack to execute the slash command. Performs parameters checks and cleanups, executes a network call to icndb.com and returns the quote in the Slack format.
 
 
 
