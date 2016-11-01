@@ -1,85 +1,67 @@
-package slacknorris;
-
-import com.amazonaws.services.lambda.runtime.Context;
-import com.amazonaws.services.lambda.runtime.LambdaLogger;
-
-import com.google.gson.Gson;
+package slacknorris.handler;
 
 import java.net.URLDecoder;
 import java.util.LinkedList;
-
+import java.util.Map;
 import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.Response;
+import slacknorris.model.icndb.IcndbResponse;
+import slacknorris.model.lambda.LambdaRequest;
+import slacknorris.model.lambda.LambdaResponse;
+import slacknorris.model.slack.SlackAttachment;
+import slacknorris.model.slack.SlackField;
+import slacknorris.model.slack.SlackResponse;
 
-import slacknorris.model.icndb.*;
-import slacknorris.model.slack.*;
+import static com.amazonaws.util.StringUtils.isNullOrEmpty;
+import static slacknorris.config.Constants.SLACK_ORIGIN_TOKEN;
 
-public class CommandHandler {
+public class HandlerCommand extends HandlerBase {
 
-  static final String SLACK_ORIGIN_TOKEN = "YOUR SLACK ORIGIN TOKEN";
-  static final Gson GSON = new Gson();
-
-  private LambdaLogger logger;
-
-  public static class CommandRequest {
-    public String token;
-    public String text;
-  }
-
-  private boolean isNullOrEmpty(String s) {
-    return s == null || s.trim().length() == 0;
-  }
-
-  boolean isId(String string) {
-    try {
-      Integer.parseInt(string);
-      return true;
-    } catch (Exception e) {
-      return false;
-    }
-  }
-
-  public Object handle(CommandRequest req, Context context) throws Exception {
-    logger = context.getLogger();
-
-    if (req == null || isNullOrEmpty(req.token) || !req.token.equals(SLACK_ORIGIN_TOKEN)) {
-      logger.log("Unauthorized");
-      return "Unauthorized";
+  @Override public LambdaResponse handle(LambdaRequest req) throws Exception {
+    if (req == null || isNullOrEmpty(req.body)) {
+      return badRequest();
     }
 
-    logger.log( "text: " + req.text );
+    Map<String, String> formParams = parseForm(req.body);
 
-    if (isNullOrEmpty(req.text)) {
-      return generate("random", null);
+    if (formParams == null ||
+        !formParams.containsKey("text") ||
+        !formParams.containsKey("token") ||
+        !SLACK_ORIGIN_TOKEN.equals(formParams.get("token"))) {
+      return unauthorized();
     }
 
-    req.text = req.text.trim();
+    String text = formParams.get("text");
 
-    if (req.text.equals("help")) {
-      return GSON.toJson(help());
-    }
-    if (req.text.equals("about")) {
-      return GSON.toJson(about());
+    if (isNullOrEmpty(text)) {
+      return ok(generate("random", null));
     }
 
-    req.text = URLDecoder.decode(req.text, "UTF-8");
-    String[] params = req.text.trim().split(" ");
+    text = text.trim();
+
+    if (text.equals("help")) {
+      return ok(gson.toJson(help()));
+    }
+    if (text.equals("about")) {
+      return ok(gson.toJson(about()));
+    }
+
+    text = URLDecoder.decode(text, "UTF-8");
+    String[] params = text.trim().split(" ");
 
     if (params.length == 1) {
       if (isId(params[0])) {
-        return generate(params[0], null);
+        return ok(generate(params[0], null));
       } else {
-        return generate("random", params[0]);
+        return ok(generate("random", params[0]));
       }
     }
 
     if (params.length == 2) {
       if (isId(params[0])) {
-        return generate(params[0], params[1]);
+        return ok(generate(params[0], params[1]));
       }
     }
-    return GSON.toJson(help());
+    return ok(gson.toJson(help()));
   }
 
   private String generate(String path, String name) {
@@ -91,26 +73,26 @@ public class CommandHandler {
     }
 
     OkHttpClient client = new OkHttpClient();
-    Request request = new Request.Builder()
+    okhttp3.Request request = new okhttp3.Request.Builder()
         .url("http://api.icndb.com" + uri)
         .build();
 
-    Response response;
+    okhttp3.Response response;
     try {
       response = client.newCall(request).execute();
     } catch (Exception e) {
       logger.log("Request to IDNDB unsuccessful " + e.getMessage());
-      return GSON.toJson(error());
+      return gson.toJson(error());
     }
 
     if (!response.isSuccessful()) {
       logger.log("Request to IDNDB unsuccessful");
-      return GSON.toJson(error());
+      return gson.toJson(error());
     }
 
     logger.log("Request to IDNDB successful");
 
-    IcndbResponse icndb = GSON.fromJson(response.body().charStream(), IcndbResponse.class);
+    IcndbResponse icndb = gson.fromJson(response.body().charStream(), IcndbResponse.class);
     if (icndb.type.equalsIgnoreCase("success")) {
       String quote = icndb.value.joke;
       quote = quote.replace("  ", " ");
@@ -129,9 +111,9 @@ public class CommandHandler {
       res.attachments.add(attachment);
       res.type = "in_channel";
 
-      return GSON.toJson(res);
+      return gson.toJson(res);
     }
-    return GSON.toJson(error());
+    return gson.toJson(error());
   }
 
   private SlackResponse error() {
@@ -198,10 +180,12 @@ public class CommandHandler {
     return res;
   }
 
-  public static void main(String[] args) throws Exception {
-    CommandRequest req = new CommandRequest();
-    req.token = SLACK_ORIGIN_TOKEN;
-    req.text = null;
-    System.out.println(new CommandHandler().handle(req, null));
+  boolean isId(String string) {
+    try {
+      Integer.parseInt(string);
+      return true;
+    } catch (Exception e) {
+      return false;
+    }
   }
 }

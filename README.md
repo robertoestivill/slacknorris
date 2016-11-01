@@ -6,35 +6,50 @@
 ![Commands](website/images/image01.jpg)
 
 
-## Lambdas
+## Backend
 
 Server side logic is implemented using [Serverless Framework](https://serverless.com), which manages [AWS Lambda](https://aws.amazon.com/lambda/) and [API Gateway](https://aws.amazon.com/api-gateway/) and other AWS resources.
 
-Although all the code is hosted in this project, there is a lot of AWS configuration that is not expressed here and will cause this project not to run out of the box.
+You will need to have AWS credentials and Serverless installed. If you are not familiar with Serverless go ahead a read [the docs](https://serverless.com/framework/docs/)
 
-There are three lambdas in this project and each gets compiled into a different module.
+```sh
+$ npm install serverless -g
+$ cd slacknorris
+$ ./gradlew clean build
+$ serverless deploy --stage prod
 
+```
+
+## Configuration
+
+The following environment variables need to be set:
+
+```sh
+$ export SLACKNORRIS_CLIENT_ID=[SLACK CLIENT ID]
+$ export SLACKNORRIS_CLIENT_SECRET=[SLACK CLIENT SECRET]
+$ export SLACKNORRIS_ORIGIN_TOKEN=[SLACK ORIGIN TOKEN]
+$ export SLACKNORRIS_EMAIL_SERVER=[SMTP EMAIL SERVER]
+$ export SLACKNORRIS_EMAIL_PORT=[SMTP EMAIL PORT]
+$ export SLACKNORRIS_EMAIL_USERNAME=[SMTP EMAIL USERNAME]
+$ export SLACKNORRIS_EMAIL_PASSWORD=[SMTP EMAIL PASSWORD]
+```
+
+The values are picked up in `build.gradle` at compile time and used to generate `slacknorris.config.Constants`, which is packaged with the rest of the code.
 
 ## Website
 
-All static content is served through Github Pages. 
-
-You can find it in the `website` directory.
-
-The original website will be running in [http://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
-
-
-
-## Notes
-
-The website is also mantained in the `master` branch and deployed to `gh-pages`.
+The website is mantained in the `master` branch and deployed to GitHub pages by pushing the `website` directory as a subtree to `gh-pages`.
 
 Jekyll needs to be installed to build the website 
 
 ```sh
 $ cd website/
 $ jekyll build
+$ cd ..
+$ git subtree push --prefix website origin gh-pages
 ```
+
+The original website will be running in [http://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
 
 
 ## License

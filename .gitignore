@@ -6,3 +6,6 @@ bin/
 .sass-cache
 .jekyll-metadata
 _site
+.gradle
+.serverless
+build/
