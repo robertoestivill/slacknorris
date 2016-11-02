@@ -7,8 +7,6 @@ import slacknorris.model.slack.SlackOauthResponse;
 
 import static slacknorris.config.Redirect.ERROR;
 import static slacknorris.config.Redirect.SUCCESS;
-import static slacknorris.config.Constants.SLACK_CLIENT_ID;
-import static slacknorris.config.Constants.SLACK_CLIENT_SECRET;
 
 public class HandlerCallback extends HandlerBase {
 
@@ -19,8 +17,8 @@ public class HandlerCallback extends HandlerBase {
       return redirect(ERROR);
     }
     String url = "https://slack.com/api/oauth.access?" +
-        "client_id=" + SLACK_CLIENT_ID +
-        "&client_secret=" + SLACK_CLIENT_SECRET +
+        "client_id=" + properties.get("slack.client.id") +
+        "&client_secret=" + properties.get("slack.client.secret") +
         "&statusCode=" + req.queryStringParameters.get("statusCode");
 
     OkHttpClient client = new OkHttpClient();

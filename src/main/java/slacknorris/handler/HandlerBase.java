@@ -8,6 +8,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Properties;
 import slacknorris.model.lambda.LambdaRequest;
 import slacknorris.model.lambda.LambdaResponse;
 
@@ -15,8 +16,9 @@ import static slacknorris.config.Redirect.ERROR;
 
 public abstract class HandlerBase implements RequestHandler<LambdaRequest, LambdaResponse> {
 
+  protected ObjectMapper jackson = new ObjectMapper();
+  protected Properties properties = new Properties();
   protected LambdaLogger logger;
-  protected ObjectMapper jackson;
 
   public LambdaResponse handleRequest(LambdaRequest request, Context context) {
     logger = context.getLogger();
@@ -25,10 +27,8 @@ public abstract class HandlerBase implements RequestHandler<LambdaRequest, Lambd
     logger.log(request.queryStringParameters + "\n");
     logger.log(request.body + "\n");
     logger.log(request.headers + "\n");
-
-    jackson = new ObjectMapper();
-
     try {
+      properties.load(getClass().getResourceAsStream("/conf/config.properties"));
       return handle(request);
     } catch (Exception e) {
       logger.log("EXCEPTION " + e.getMessage());

@@ -1,6 +1,5 @@
 package slacknorris.handler;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.LinkedList;
@@ -12,8 +11,6 @@ import slacknorris.model.lambda.LambdaResponse;
 import slacknorris.model.slack.SlackAttachment;
 import slacknorris.model.slack.SlackField;
 import slacknorris.model.slack.SlackResponse;
-
-import static slacknorris.config.Constants.SLACK_ORIGIN_TOKEN;
 
 public class HandlerCommand extends HandlerBase {
 
@@ -27,7 +24,7 @@ public class HandlerCommand extends HandlerBase {
     if (formParams == null ||
         !formParams.containsKey("text") ||
         !formParams.containsKey("token") ||
-        !SLACK_ORIGIN_TOKEN.equals(formParams.get("token"))) {
+        !properties.get("slack.origin.token").equals(formParams.get("token"))) {
       return unauthorized();
     }
 

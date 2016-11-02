@@ -1,28 +1,11 @@
-buildscript {
-  repositories {
-    maven {
-      url 'https://plugins.gradle.org/m2/'
-    }
-  }
-  dependencies {
-    classpath 'gradle.plugin.de.fuerstenau:BuildConfigPlugin:1.1.7'
-  }
-}
-
-// Generate a Constants class
-// https://github.com/mfuerstenau/gradle-buildconfig-plugin
-apply plugin: 'de.fuerstenau.buildconfig'
-buildConfig {
-  clsName = 'Constants'
-  packageName = 'slacknorris.config'
-
-  buildConfigField 'String', 'SLACK_CLIENT_ID', "$System.env.SLACKNORRIS_CLIENT_ID"
-  buildConfigField 'String', 'SLACK_CLIENT_SECRET', "$System.env.SLACKNORRIS_CLIENT_SECRET"
-  buildConfigField 'String', 'SLACK_ORIGIN_TOKEN', "$System.env.SLACKNORRIS_ORIGIN_TOKEN"
-  buildConfigField 'String', 'EMAIL_SERVER', "$System.env.SLACKNORRIS_EMAIL_SERVER"
-  buildConfigField 'String', 'EMAIL_PORT', "$System.env.SLACKNORRIS_EMAIL_PORT"
-  buildConfigField 'String', 'EMAIL_USERNAME', "$System.env.SLACKNORRIS_EMAIL_USERNAME"
-  buildConfigField 'String', 'EMAIL_PASSWORD', "$System.env.SLACKNORRIS_EMAIL_PASSWORD"
+ant.propertyfile(file: "$projectDir/src/main/resources/conf/config.properties") {
+  entry(key: "slack.client.id", value: System.getenv('SLACKNORRIS_CLIENT_ID'))
+  entry(key: "slack.client.secret", value: System.getenv('SLACKNORRIS_CLIENT_SECRET'))
+  entry(key: "slack.origin.token", value: System.getenv('SLACKNORRIS_ORIGIN_TOKEN'))
+  entry(key: "email.server", value: System.getenv('SLACKNORRIS_EMAIL_SERVER'))
+  entry(key: "email.port", value: System.getenv('SLACKNORRIS_EMAIL_PORT'))
+  entry(key: "email.username", value: System.getenv('SLACKNORRIS_EMAIL_USERNAME'))
+  entry(key: "email.password", value: System.getenv('SLACKNORRIS_EMAIL_PASSWORD'))
 }
 
 apply plugin: 'java'
@@ -32,11 +15,10 @@ repositories {
 }
 
 dependencies {
-  compile(
-      'com.amazonaws:aws-lambda-java-core:1.1.0',
-      'com.fasterxml.jackson.core:jackson-databind:2.5.3',
-      'com.squareup.okhttp3:okhttp:3.2.0',
-      'com.sun.mail:javax.mail:1.5.3')
+  compile 'com.amazonaws:aws-lambda-java-core:1.1.0'
+  compile 'com.fasterxml.jackson.core:jackson-databind:2.5.3'
+  compile 'com.squareup.okhttp3:okhttp:3.2.0'
+  compile 'com.sun.mail:javax.mail:1.5.3'
 }
 
 jar {

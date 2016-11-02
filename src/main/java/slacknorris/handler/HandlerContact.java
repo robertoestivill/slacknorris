@@ -11,10 +11,6 @@ import javax.mail.internet.MimeMessage;
 import slacknorris.model.lambda.LambdaRequest;
 import slacknorris.model.lambda.LambdaResponse;
 
-import static slacknorris.config.Constants.EMAIL_SERVER;
-import static slacknorris.config.Constants.EMAIL_PORT;
-import static slacknorris.config.Constants.EMAIL_PASSWORD;
-import static slacknorris.config.Constants.EMAIL_USERNAME;
 import static slacknorris.config.Redirect.CONTACTED;
 import static slacknorris.config.Redirect.ERROR;
 
@@ -33,16 +29,18 @@ public class HandlerContact extends HandlerBase {
   }
 
   private void sendEmail(Map<String, String> params) throws Exception {
-    Properties props = new Properties();
-    props.put("mail.smtp.auth", "true");
-    props.put("mail.smtp.starttls.enable", "true");
-    props.put("mail.smtp.host", EMAIL_SERVER);
-    props.put("mail.smtp.port", EMAIL_PORT);
+    Properties emailProperties = new Properties();
+    emailProperties.put("mail.smtp.auth", "true");
+    emailProperties.put("mail.smtp.starttls.enable", "true");
+    emailProperties.put("mail.smtp.host", properties.get("email.server"));
+    emailProperties.put("mail.smtp.port", properties.get("email.port"));
 
-    Session session = Session.getInstance(props,
+    Session session = Session.getInstance(emailProperties,
         new javax.mail.Authenticator() {
           protected PasswordAuthentication getPasswordAuthentication() {
-            return new PasswordAuthentication(EMAIL_USERNAME, EMAIL_PASSWORD);
+            return new PasswordAuthentication(
+                String.valueOf(properties.get("email.username")),
+                String.valueOf(properties.get("email.password")));
           }
         });
 
