@@ -34,7 +34,7 @@ $ export SLACKNORRIS_EMAIL_USERNAME=[SMTP EMAIL USERNAME]
 $ export SLACKNORRIS_EMAIL_PASSWORD=[SMTP EMAIL PASSWORD]
 ```
 
-The values are picked up in `build.gradle` at compile time and used to generate `slacknorris.config.Constants`, which is packaged with the rest of the code.
+The values are used to create a properties file in `src/main/resources/conf/` that will be read on application startup and used for several configurations.
 
 ## Website
 
