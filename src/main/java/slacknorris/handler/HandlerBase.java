@@ -3,7 +3,7 @@ package slacknorris.handler;
 import com.amazonaws.services.lambda.runtime.Context;
 import com.amazonaws.services.lambda.runtime.LambdaLogger;
 import com.amazonaws.services.lambda.runtime.RequestHandler;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.HashMap;
@@ -11,14 +11,13 @@ import java.util.Map;
 import slacknorris.model.lambda.LambdaRequest;
 import slacknorris.model.lambda.LambdaResponse;
 
-import static slacknorris.Redirect.ERROR;
+import static slacknorris.config.Redirect.ERROR;
 
 public abstract class HandlerBase implements RequestHandler<LambdaRequest, LambdaResponse> {
 
   protected LambdaLogger logger;
-  protected Gson gson;
+  protected ObjectMapper jackson;
 
-  @Override
   public LambdaResponse handleRequest(LambdaRequest request, Context context) {
     logger = context.getLogger();
     logger.log(context.getAwsRequestId() + "\n");
@@ -27,7 +26,7 @@ public abstract class HandlerBase implements RequestHandler<LambdaRequest, Lambd
     logger.log(request.body + "\n");
     logger.log(request.headers + "\n");
 
-    gson = new Gson();
+    jackson = new ObjectMapper();
 
     try {
       return handle(request);
@@ -80,5 +79,9 @@ public abstract class HandlerBase implements RequestHandler<LambdaRequest, Lambd
       }
     }
     return result;
+  }
+
+  protected boolean isNullOrEmpty(String s) {
+    return s == null || s.trim().length() == 0;
   }
 }

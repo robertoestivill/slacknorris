@@ -38,7 +38,7 @@ provider:
 package:
 #  exclude:
 #    - exclude-me.java
-  artifact: build/distributions/slacknorris.zip
+  artifact: build/libs/slacknorris.jar
 
 functions:
   callback:

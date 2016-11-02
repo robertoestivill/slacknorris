@@ -1,6 +1,5 @@
 package slacknorris.handler;
 
-import com.amazonaws.util.StringUtils;
 import java.util.Map;
 import java.util.Properties;
 import javax.mail.Message;
@@ -16,17 +15,17 @@ import static slacknorris.config.Constants.EMAIL_SERVER;
 import static slacknorris.config.Constants.EMAIL_PORT;
 import static slacknorris.config.Constants.EMAIL_PASSWORD;
 import static slacknorris.config.Constants.EMAIL_USERNAME;
-import static slacknorris.Redirect.CONTACTED;
-import static slacknorris.Redirect.ERROR;
+import static slacknorris.config.Redirect.CONTACTED;
+import static slacknorris.config.Redirect.ERROR;
 
 public class HandlerContact extends HandlerBase {
 
   @Override public LambdaResponse handle(LambdaRequest request) throws Exception {
     Map<String, String> result = parseForm(request.body);
     if (result == null ||
-        StringUtils.isNullOrEmpty(result.get("name")) ||
-        StringUtils.isNullOrEmpty(result.get("email")) ||
-        StringUtils.isNullOrEmpty(result.get("message"))) {
+        isNullOrEmpty(result.get("name")) ||
+        isNullOrEmpty(result.get("email")) ||
+        isNullOrEmpty(result.get("message"))) {
       return redirect(ERROR);
     }
     sendEmail(result);

@@ -1,15 +1,17 @@
 package slacknorris.model.slack;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SlackField {
 
-  @SerializedName("title")
+  @JsonProperty(value = "title")
   public String title;
 
-  @SerializedName("value")
+  @JsonProperty(value = "value")
   public String value;
 
-  @SerializedName("short")
+  @JsonProperty(value = "short")
   public Boolean isShort;
 }

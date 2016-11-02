@@ -1,24 +1,26 @@
 package slacknorris.model.slack;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SlackOauthResponse {
 
-  @SerializedName("ok")
+  @JsonProperty(value = "ok")
   public Boolean isOk;
 
-  @SerializedName("error")
+  @JsonProperty(value = "error")
   public String error;
 
-  @SerializedName("scope")
+  @JsonProperty(value = "scope")
   public String scope;
 
-  @SerializedName("access_token")
+  @JsonProperty(value = "access_token")
   public String accessToken;
 
-  @SerializedName("team_name")
+  @JsonProperty(value = "team_name")
   public String teamName;
 
-  @SerializedName("team_id")
+  @JsonProperty(value = "team_id")
   public String teamId;
 }

@@ -1,12 +1,14 @@
 package slacknorris.model.icndb;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class IcndbResponse {
 
-  @SerializedName("type")
+  @JsonProperty(value = "type")
   public String type;
 
-  @SerializedName("value")
+  @JsonProperty(value = "value")
   public IcndbQuote value;
 }

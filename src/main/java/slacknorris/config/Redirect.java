@@ -1,4 +1,4 @@
-package slacknorris;
+package slacknorris.config;
 
 public final class Redirect {
 

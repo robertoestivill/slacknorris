@@ -1,40 +1,42 @@
 package slacknorris.model.slack;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SlackAttachment {
 
-  @SerializedName("color")
+  @JsonProperty(value = "color")
   public String color;
 
-  @SerializedName("title")
+  @JsonProperty(value = "title")
   public String title;
 
-  @SerializedName("title_link")
+  @JsonProperty(value = "title_link")
   public String titleLink;
 
-  @SerializedName("pretext")
+  @JsonProperty(value = "pretext")
   public String pretext;
 
-  @SerializedName("text")
+  @JsonProperty(value = "text")
   public String text;
 
-  @SerializedName("author_name")
+  @JsonProperty(value = "author_name")
   public String authorName;
 
-  @SerializedName("author_link")
+  @JsonProperty(value = "author_link")
   public String authorLink;
 
-  @SerializedName("author_icon")
+  @JsonProperty(value = "author_icon")
   public String authorIcon;
 
-  @SerializedName("thumb_url")
+  @JsonProperty(value = "thumb_url")
   public String thumbUrl;
 
-  @SerializedName("fields")
+  @JsonProperty(value = "fields")
   public List<SlackField> fields;
 
-  @SerializedName("mrkdwn_in")
+  @JsonProperty(value = "mrkdwn_in")
   public List<String> markdown;
 }

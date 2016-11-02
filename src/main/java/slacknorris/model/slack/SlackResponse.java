@@ -1,16 +1,18 @@
 package slacknorris.model.slack;
 
-import com.google.gson.annotations.SerializedName;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import java.util.List;
 
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class SlackResponse {
 
-  @SerializedName("text")
+  @JsonProperty(value = "text")
   public String text;
 
-  @SerializedName("response_type")
+  @JsonProperty(value = "response_type")
   public String type;
 
-  @SerializedName("attachments")
+  @JsonProperty(value = "attachments")
   public List<SlackAttachment> attachments;
 }

@@ -1,5 +1,7 @@
 package slacknorris.handler;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import java.io.IOException;
 import java.net.URLDecoder;
 import java.util.LinkedList;
 import java.util.Map;
@@ -11,7 +13,6 @@ import slacknorris.model.slack.SlackAttachment;
 import slacknorris.model.slack.SlackField;
 import slacknorris.model.slack.SlackResponse;
 
-import static com.amazonaws.util.StringUtils.isNullOrEmpty;
 import static slacknorris.config.Constants.SLACK_ORIGIN_TOKEN;
 
 public class HandlerCommand extends HandlerBase {
@@ -39,10 +40,10 @@ public class HandlerCommand extends HandlerBase {
     text = text.trim();
 
     if (text.equals("help")) {
-      return ok(gson.toJson(help()));
+      return ok(jackson.writeValueAsString(help()));
     }
     if (text.equals("about")) {
-      return ok(gson.toJson(about()));
+      return ok(jackson.writeValueAsString(about()));
     }
 
     text = URLDecoder.decode(text, "UTF-8");
@@ -61,10 +62,10 @@ public class HandlerCommand extends HandlerBase {
         return ok(generate(params[0], params[1]));
       }
     }
-    return ok(gson.toJson(help()));
+    return ok(jackson.writeValueAsString(help()));
   }
 
-  private String generate(String path, String name) {
+  private String generate(String path, String name) throws IOException {
     logger.log("Generating quote for: [" + path + "," + name + "]");
 
     String uri = "/jokes/" + path + "?escape=javascript";
@@ -82,17 +83,17 @@ public class HandlerCommand extends HandlerBase {
       response = client.newCall(request).execute();
     } catch (Exception e) {
       logger.log("Request to IDNDB unsuccessful " + e.getMessage());
-      return gson.toJson(error());
+      return jackson.writeValueAsString(error());
     }
 
     if (!response.isSuccessful()) {
       logger.log("Request to IDNDB unsuccessful");
-      return gson.toJson(error());
+      return jackson.writeValueAsString(error());
     }
 
     logger.log("Request to IDNDB successful");
 
-    IcndbResponse icndb = gson.fromJson(response.body().charStream(), IcndbResponse.class);
+    IcndbResponse icndb = jackson.readValue(response.body().string(), IcndbResponse.class);
     if (icndb.type.equalsIgnoreCase("success")) {
       String quote = icndb.value.joke;
       quote = quote.replace("  ", " ");
@@ -111,9 +112,9 @@ public class HandlerCommand extends HandlerBase {
       res.attachments.add(attachment);
       res.type = "in_channel";
 
-      return gson.toJson(res);
+      return jackson.writeValueAsString(res);
     }
-    return gson.toJson(error());
+    return jackson.writeValueAsString(error());
   }
 
   private SlackResponse error() {
