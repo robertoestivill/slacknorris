@@ -16,6 +16,7 @@ service: slacknorris # NOTE: update this with your service name
 provider:
   name: aws
   runtime: java8
+  cfLogs: true
 #  stage: dev
 #  region: us-east-1
 
