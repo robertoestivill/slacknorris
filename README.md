@@ -38,18 +38,14 @@ The values are used to create a properties file in `src/main/resources/conf/` th
 
 ## Website
 
-The website is mantained in the `master` branch and deployed to GitHub pages by pushing the `website` directory as a subtree to `gh-pages`.
-
 Jekyll needs to be installed to build the website 
 
 ```sh
 $ cd website/
 $ jekyll build
-$ cd ..
-$ git subtree push --prefix website origin gh-pages
 ```
 
-The original website will be running in [http://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
+The original website will be running in [https://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
 
 
 ## License
