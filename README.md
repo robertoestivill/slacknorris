@@ -45,7 +45,7 @@ $ cd website/
 $ jekyll build
 ```
 
-The original website will be running in [https://robertoestivill.com/slacknorris](http://robertoestivill.com/slacknorris)
+The original website will be running in [https://robertoestivill.com/slacknorris](https://robertoestivill.com/slacknorris)
 
 
 ## License
