@@ -9,3 +9,4 @@ _site
 .gradle
 .serverless
 build/
+src/main/resources/conf/config.properties
